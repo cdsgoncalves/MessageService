@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace mainservice
 {
@@ -29,6 +30,15 @@ namespace mainservice
         {
             // Add framework services.
             services.AddMvc();
+
+            // Add logging service. 
+            // TODO: Write all exceptions to a collection into ES
+            services.AddLogging();
+
+            // Register the Swagger generator
+            services.AddSwaggerGen(g=>{
+                g.SwaggerDoc("v1", new Info{ Title="Message Service API", Version="v1"});
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +48,16 @@ namespace mainservice
             loggerFactory.AddDebug();
 
             app.UseMvc();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            // It makes the SwaggerUI accessible through http://<address>:<port>/swagger
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Message Service API v1");
+            });
         }
     }
 }
