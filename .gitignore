@@ -2,3 +2,5 @@ obj/
 bin/
 Thumbs.db
 *.log
+*.csproj.user
+mainservice.xml

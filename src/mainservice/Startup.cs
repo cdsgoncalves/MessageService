@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace mainservice
@@ -37,7 +39,17 @@ namespace mainservice
 
             // Register the Swagger generator
             services.AddSwaggerGen(g=>{
-                g.SwaggerDoc("v1", new Info{ Title="Message Service API", Version="v1"});
+                g.SwaggerDoc("v1", new Info{ 
+                    Title="Message Service API", 
+                    Version="v1",
+                    Description="The Message Service is, as name says, a Service to manage submissions of messages of a bunch of kinds in a SOA/Microservices cenario. It`s intended to be the gateway to send and track submissions of email, sms, push notifications and so on.",
+                    Contact=new Contact{Name="XOPZ team", Url="https://github.com/xopz"},
+                    License= new License{Name="Use under MIT", Url="https://github.com/xopz/MessageService/blob/master/LICENSE.txt"}
+                });
+                //Set the comments path for the swagger json and ui.
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "mainservice.xml"); 
+                g.IncludeXmlComments(xmlPath);
             });
         }
 

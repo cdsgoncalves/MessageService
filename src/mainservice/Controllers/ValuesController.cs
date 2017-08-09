@@ -10,6 +10,10 @@ namespace mainservice.Controllers
     public class ValuesController : Controller
     {
         // GET api/values
+        /// <summary>
+        /// Get all avaliable Values
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -17,6 +21,11 @@ namespace mainservice.Controllers
         }
 
         // GET api/values/5
+        /// <summary>
+        /// Get just a value
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public string Get(int id)
         {
@@ -24,7 +33,20 @@ namespace mainservice.Controllers
         }
 
         // POST api/values
+        /// <summary>
+        /// Creates a value
+        /// </summary>
+        /// <remarks>
+        /// Note that it is a fake method.
+        /// </remarks>
+        /// <param name="value">The Value to be created</param>
+        /// <response code="201">The Value that just created</response>
+        /// <response code="400">The Value sent is invalid or malformed</response>
+        /// <response code="500">Bad bad, Dr. App. We`ve experiencing some troble</response>
         [HttpPost]
+        [ProducesResponseType(typeof(string),201)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string),500)]
         public void Post([FromBody]string value)
         {
         }
