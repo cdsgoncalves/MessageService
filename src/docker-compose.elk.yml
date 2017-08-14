@@ -34,26 +34,6 @@ services:
       - messageservicenetwork
     depends_on:
       - elasticsearch  
-  rabbitmq:
-    image: rabbitmq:3.6.10
-    ports:
-      - '4369:4369'
-      - '5671:5671'
-      - '5672:5672'
-      - '25672:25672'
-    networks: 
-      - messageservicenetwork
-  mainservice:
-    build: mainservice/
-    ports:
-      - 80:80
-    environment:
-      - ASPNETCORE_URLS=http://+:80
-      - ASPNETCORE_ENVIRONMENT=Development
-    networks: 
-      - messageservicenetwork
-    depends_on:
-      - elasticsearch  
 networks:
   messageservicenetwork:
     driver: bridge
