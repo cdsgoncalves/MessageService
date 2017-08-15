@@ -22,8 +22,9 @@ The Message Service soluction can be deployed in a bunch of ways, but is strongl
 
 ### Docker Compose
 
-1. Install Docker;
-2. Inside `src` folder, run the following command: `$ docker-compose up`
+1. Install Docker. It can be downloaded [here](https://www.docker.com/);
+2. Clone [this](https://github.com/xopz/MessageService) repo;
+2. Inside `src` folder, run the following command: `$ docker-compose up`;
 3. Done!
 
 ## Develop
