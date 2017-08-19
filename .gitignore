@@ -5,3 +5,4 @@ Thumbs.db
 *.csproj.user
 mainservice.xml
 log-buffer*
+*.suo
