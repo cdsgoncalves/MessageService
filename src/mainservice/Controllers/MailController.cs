@@ -1,5 +1,7 @@
+using System;
 using mainservice.Models;
 using Microsoft.AspNetCore.Mvc;
+using RabbitMQ.Client;
 
 namespace mainservice.Controllers
 {
@@ -31,7 +33,21 @@ namespace mainservice.Controllers
         [ProducesResponseType(typeof(MailMessage),500)]
         public void Post([FromBody]MailMessage mailMessage)
         {
+            //CREATES A CONNECTION
+            var _factory = new ConnectionFactory();
+            _factory.Uri = new Uri("amqp://guest:guest@localhost:5672/vhost");
+            var _connection = _factory.CreateConnection();
 
+            //CREATES A QUEUE
+            var _channel = _connection.CreateModel();
+            const string C_MAIL_EXCHANGE_NAME = "mailExchange";
+            const string C_MAIL_QUEUE_NAME = "mailQueue";
+            const string C_MAIL_ROUTING_KEY = "mailRoutingKey";
+            _channel.ExchangeDeclare(C_MAIL_EXCHANGE_NAME, ExchangeType.Direct);
+            _channel.QueueDeclare(C_MAIL_QUEUE_NAME, true, true, false,null);
+            _channel.QueueBind(C_MAIL_QUEUE_NAME,C_MAIL_EXCHANGE_NAME,C_MAIL_ROUTING_KEY,null);
+
+            
         }
     }
 }
